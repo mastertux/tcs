@@ -10,10 +10,10 @@ class GenerateRandomEvents(CronJobBase):
     code = 'events_generator.schedule_events'
 
     def do(self):
-        rc = requests.get('http://localhost:8000/api/computers/')
+        rc = requests.get('http://localhost/api/computers/')
         computers = json.loads(rc.text)
 
-        rs = requests.get('http://localhost:8000/api/computers_status/')
+        rs = requests.get('http://localhost/api/computers_status/')
         status = json.loads(rs.text)
 
         if rc.status_code == 200 and rc.status_code == 200:
@@ -21,4 +21,5 @@ class GenerateRandomEvents(CronJobBase):
                 random_index = random.randrange(0, len(status))
                 event = {"codigo": status[random_index].get('codigo'), "computador": computer.get('id')}
 
-                requests.post('http://localhost:8000/api/computer_events/', json=event)
+                requests.post('http://localhost/api/computer_events/', json=event)
+
